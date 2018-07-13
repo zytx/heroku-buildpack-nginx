@@ -18,6 +18,7 @@ nginx_tarball_url=http://nginx.org/download/nginx-${NGINX_VERSION}.tar.gz
 pcre_tarball_url=http://iweb.dl.sourceforge.net/project/pcre/pcre/${PCRE_VERSION}/pcre-${PCRE_VERSION}.tar.bz2
 headers_more_nginx_module_url=https://github.com/openresty/headers-more-nginx-module/archive/v${HEADERS_MORE_VERSION}.tar.gz
 ngx_http_google_filter_module_url=https://github.com/cuber/ngx_http_google_filter_module/archive/${GOOGLE_MODULE_VERSION}.tar.gz
+ngx_http_substitutions_filter_module_url=https://github.com/yaoweibin/ngx_http_substitutions_filter_module/archive/v0.6.4.tar.gz
 
 temp_dir=$(mktemp -d /tmp/nginx.XXXXXXXXXX)
 
@@ -40,6 +41,8 @@ echo "Downloading $headers_more_nginx_module_url"
 echo "Downloading $ngx_http_google_filter_module_url"
 (cd nginx-${NGINX_VERSION} && curl -L $ngx_http_google_filter_module_url | tar xvz )
 
+echo "Downloading $ngx_http_substitutions_filter_module_url"
+(cd nginx-${NGINX_VERSION} && curl -L $ngx_http_substitutions_filter_module_url | tar xvz )
 (
 	cd nginx-${NGINX_VERSION}
 	./configure \
@@ -47,6 +50,7 @@ echo "Downloading $ngx_http_google_filter_module_url"
 		--with-http_ssl_module \
 		--prefix=/tmp/nginx \
 		--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/headers-more-nginx-module-${HEADERS_MORE_VERSION} \
+		--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/ngx_http_substitutions_filter_module_url-0.6.4 \
 		--add-module=/${temp_dir}/nginx-${NGINX_VERSION}/ngx_http_google_filter_module-${GOOGLE_MODULE_VERSION}
 	make install
 )
