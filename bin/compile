@@ -4,7 +4,7 @@ set -e
 
 mkdir -p "$1/bin/"
 sh $1/scripts/build_nginx.sh
-# cp "bin/nginx-$STACK" "$1/bin/nginx"
+cp "/tmp/nginx/sbin/nginx" "$1/bin/nginx"
 nginx_version=$(./bin/nginx-$STACK -V 2>&1 | head -1 | awk '{ print $NF }')
 echo "-----> nginx-buildpack: Installed ${nginx_version} to app/bin"
 cp bin/start-nginx "$1/bin/"
