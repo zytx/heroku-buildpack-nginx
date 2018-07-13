@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 
 set -e
-ls
 mkdir -p "$1/bin/"
 sh $1/scripts/build_nginx.sh
-cp "/tmp/nginx/sbin/nginx" "bin/nginx"
+ls
+cp "/tmp/nginx/sbin/nginx" "$1/bin/"
 nginx_version=$(./bin/nginx-$STACK -V 2>&1 | head -1 | awk '{ print $NF }')
 echo "-----> nginx-buildpack: Installed ${nginx_version} to app/bin"
 cp bin/start-nginx "$1/bin/"
